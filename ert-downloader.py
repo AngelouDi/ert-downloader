@@ -4,30 +4,32 @@ from multiprocessing.pool import ThreadPool
 import re
 import sys
 
-
 if __name__ == "__main__":
 
     title = ''
     url_root = ''
     url = ''
     files = []
-    page_url = sys.argv[1]
-    page = (requests.get(page_url).text.split('\n'))
+    page_url = sys.argv[1]  # website url
+    threads = 5  # amount of workers who are downloading at the same time
 
-    for i in page:
-        if '.mp4' in i:  # finds the url in the source code of the video that contains the
-            url = i      # link the stream link that contains the .m3u8 files
-            break
+    page = (requests.get(page_url).text.split('\n'))  # getting the source code of the page
 
     title = re.split('/', page_url)[-2]  # get the title of the video (it's the last segment of the url, I'm lazy)
 
+    for i in page:
+        if '.mp4' in i:  # finds the url in the source code of the video that contains the
+            url = i      # link for the stream link (.mp4) that contains the .m3u8 files
+            break
+
     video_url = url.split('.mp4')[0][13:]+'.mp4'  # extract the forementioned link
 
-    video_file = requests.get(video_url).text.split('\n')  # getting the .mp4 link
+    video_file = requests.get(video_url).text.split('\n')  # reading the 'video file' that contains the necessary link
 
-    for i in video_file:
+    for i in video_file:  # getting the .mp4 link
         if '.mp4' in i:
-            url_root = (i.split("'")[1].split('.mp4')[0]+'.mp4/')  # find the link we will use to the .m3u8 files
+            url_root = (i.split("'")[1].split('.mp4')[0]+'.mp4/')  # find the link we will use to get the .m3u8 link
+            break
 
     playlist_m3u8 = requests.get(url_root+'playlist.m3u8', verify=False).text  # this file contains
     chunklist_url = playlist_m3u8.split('\n')[3]  # the link for the file that contains the links of each video segment
@@ -41,28 +43,24 @@ if __name__ == "__main__":
 
 
     def download(link):
+        global text  # this text contains the segment names and is used in the ffmpeg
+            # to join them to generate the final vide
+        text += 'file ' + link + '\n'
         with open(link, 'wb') as f:
             file = requests.get(url_root+link, verify=False)
             f.write(file.content)
-            global text
 
-        return
-
-
-    for i in files:
-        text += 'file '+i+'\n'  # this text contains the segment names and is used in the ffmpeg
-        # to join them to generate the final video
-
-    pool = ThreadPool(5)  # multithreading to download many segments simultaniously
+    pool = ThreadPool(threads)  # multithreading to download many segments simultaniously
     thread = pool.map(download, files)
     pool.close()
-    pool.join()
+    pool.join()  # waiting for the downloads to complete
 
-    w = open('list.txt', 'w+')  # the file with the filenames for the ffmpeg
+    w = open('filenames.txt', 'w+')  # the file with the filenames for the ffmpeg
     w.write(text)
     w.close()
 
-    os.system(('ffmpeg -f concat -i list.txt -acodec copy -vcodec copy {0}.mp4').format(title))   # finally we can GENERATE THE VIDEO
+    os.system(('ffmpeg -f concat -i filenames.txt -acodec copy -vcodec copy {0}.mp4').format(title))   # finally we can
+    # GENERATE THE VIDEO
 
     for i in files:
-        os.remove(i)
+        os.remove(i)  # delete the segments we downloaded, unless you wanna run out of storage, it's up to you <3
