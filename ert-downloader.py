@@ -29,11 +29,18 @@ if __name__ == "__main__":
     for i in video_file:  # getting the .mp4 link
         if '.mp4' in i:
             url_root = (i.split("'")[1].split('.mp4')[0]+'.mp4/')  # find the link we will use to get the .m3u8 link
-            url_root = url_root.replace('dvrorigin/', 'dvrorigingr/')  # repairing the link, probably geo issue
             break
 
     playlist_m3u8 = requests.get(url_root+'playlist.m3u8', verify=False).text  # this file contains
-    chunklist_url = playlist_m3u8.split('\n')[3]  # the link for the file that contains the links of each video segment
+    # the link for the file that contains the links of each video segment
+    try:  # fixing geolocation issue for some videos
+        chunklist_url = playlist_m3u8.split('\n')[3]
+        playlist_m3u8 = requests.get(url_root + 'playlist.m3u8', verify=False).text
+    except:
+        url_root = url_root.replace('dvrorigin/', 'dvrorigingr/')
+        playlist_m3u8 = requests.get(url_root + 'playlist.m3u8', verify=False).text
+        chunklist_url = playlist_m3u8.split('\n')[3]
+
     chunklist_m3u8 = requests.get(url_root + chunklist_url, verify=False).text  # we generate it and get the file
     chunklist_lines = chunklist_m3u8.split('\n')
 
