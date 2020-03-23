@@ -4,18 +4,9 @@ from multiprocessing.pool import ThreadPool
 import re
 import sys
 
-if __name__ == "__main__":
 
-    url_root = ''
-    url = ''
-    text = ''
-    files = []
-    page_url = sys.argv[1]  # website url
-    threads = 5  # amount of workers who are downloading at the same time
-
+def obtainMp4Link(page_url):
     page = (requests.get(page_url).text.split('\n'))  # getting the source code of the page
-
-    title = re.split('/', page_url)[-2]  # get the title of the video (it's the last segment of the url, I'm lazy)
 
     for i in page:
         if '.mp4' in i:  # finds the url in the source code of the video that contains the
@@ -29,7 +20,9 @@ if __name__ == "__main__":
             url_root = (i.split("'")[1].split('.mp4')[0]+'.mp4/')  # find the link we will use to get the .m3u8 link
             if("ep.ert.gr/" in url_root):
                 break
+    return url_root
 
+def obtainm3u8(url_root):
     playlist_m3u8 = requests.get(url_root+'playlist.m3u8', verify=False).text  # this file contains
     # the link for the file that contains the links of each video segment
     try:  # fixing geolocation issue for some videos
@@ -41,8 +34,12 @@ if __name__ == "__main__":
         chunklist_url = playlist_m3u8.split('\n')[3]
 
     chunklist_m3u8 = requests.get(url_root + chunklist_url, verify=False).text  # we generate it and get the file
-    chunklist_lines = chunklist_m3u8.split('\n')
+    return chunklist_m3u8
 
+def generateDownloadListFile(chunklist_m3u8):
+    text = ''
+
+    chunklist_lines = chunklist_m3u8.split('\n')
     for i in chunklist_lines:
         if '.ts' in i:  # we get each segment filename that's used to generate the urls of each
             files.append(i)
@@ -52,10 +49,33 @@ if __name__ == "__main__":
     w.write(text)
     w.close()
 
-    def download(link):
-        with open(link, 'wb') as f:
-            file = requests.get(url_root+link, verify=False)
-            f.write(file.content)
+def download(link):
+    with open(link, 'wb') as f:
+        file = requests.get(url_root+link, verify=False)
+        f.write(file.content)
+
+if __name__ == "__main__":
+
+    url_root = ''
+    url = ''
+    text = ''
+    files = []
+    page_url = "https://archive.ert.gr/paraskinio-manolis-korres/"  # website url
+    threads = 5  # amount of workers who are downloading at the same time
+
+
+
+    title = re.split('/', page_url)[-2]  # get the title of the video (it's the last segment of the url, I'm lazy)
+
+
+    url_root = obtainMp4Link(page_url)
+
+    chunklist_m3u8 = obtainm3u8(url_root)
+
+    generateDownloadListFile(chunklist_m3u8)
+
+
+
 
     pool = ThreadPool(threads)  # multithreading to download many segments simultaniously
     thread = pool.map(download, files)
