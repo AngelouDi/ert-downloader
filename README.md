@@ -8,7 +8,6 @@ Usage
 
 python ert-downloader.py [url]
 
-If you are on linux, you probably have to change the ffmpeg line to "os.system(('./ffmpeg ...", so putting an './' in front of the 'ffmpeg'.
 
 Example
 =======
