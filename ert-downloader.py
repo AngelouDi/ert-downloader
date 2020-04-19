@@ -60,7 +60,7 @@ if __name__ == "__main__":
     url = ''
     text = ''
     files = []
-    page_url = "https://archive.ert.gr/paraskinio-manolis-korres/"  # website url
+    page_url = sys.argv[1]  # website url
     threads = 5  # amount of workers who are downloading at the same time
 
 
