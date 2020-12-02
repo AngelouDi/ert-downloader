@@ -22,12 +22,6 @@ def download_process(link):
         f.write(file.content)
     f.close()
 
-def download_files():
-    pool = ThreadPool(threads)  # multithreading to download many segments simultaniously
-    pool.map(download_process, files)
-    pool.close()
-    pool.join()  # waiting for the downloads to complete
-
 def create_parts_txt(chunklist):
     if not os.path.exists('download_parts'):
         os.makedirs('download_parts')
@@ -45,9 +39,8 @@ def download(stream_data):
     create_parts_txt(chunklist)
     title = stream_data["title"]
     print("DOWNLOADING:{}".format(title))
-
     download_list = generate_download_list(stream_url, chunklist)
-    pool = ThreadPool(5)  #TODO: arguement this
+    pool = ThreadPool(5)
     pool.map(download_process, download_list)
     pool.close()
     pool.join()  # waiting for the downloads to complete

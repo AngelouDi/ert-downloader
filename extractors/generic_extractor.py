@@ -21,16 +21,19 @@ def obtain_player_url(url):
 def obtain_stream_url(url):
     html = requests.get(url).text
     stream_url = re.split("var HLSLink = '(.*)'", html)[1]
-    if("dvrorigingr" not in stream_url):
+    is_geo = re.split("var isGeo = \"(.*)\"", html)[1]
+    if("dvrorigingr" not in stream_url and is_geo  == "true"):
         stream_url = re.sub("dvrorigin", "dvrorigingr", stream_url)
     stream_url = re.sub("/playlist.m3u8", "", stream_url)
+    print(stream_url)
     return stream_url
 
 
 def obtain_chunklist(url):
-    playlist_url = url + "/chunklist.m3u8"
+    chunklist_url = url + "/chunklist.m3u8"
+    print(chunklist_url)
     clean_chunklist = []
-    chunklist = requests.get(playlist_url).text.split('\n')
+    chunklist = requests.get(chunklist_url).text.split('\n')
     for chunk in chunklist:
         if ".ts" in chunk:
             clean_chunklist.append(chunk)
