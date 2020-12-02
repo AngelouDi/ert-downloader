@@ -3,7 +3,7 @@ from downloader import downloader
 import sys
 
 if __name__ == "__main__":
-    url = "sys.argv[1]"
+    url = sys.argv[1]
     if "archive.ert" in url:
         stream_data = archive_extractor.obtain_data(url)
     elif "webtv.ert" in url or "ertflix.gr" in url:
