@@ -5,8 +5,8 @@ ert-downloader
 
 Υποστηρίζει τους ιστότοπους:
  - www.ertflix.gr
- - webtv.ert.gr
- - archive.ert.gr
+ - www.webtv.ert.gr
+ - www.archive.ert.gr
 
 αλλα θα προσπαθήσει να κατεβάσει και απο οποιονδήποτε άλλο του προσφέρετε.
 
@@ -39,8 +39,8 @@ ert-downloader
 This tool is used to download videos from Greece's public national channel webtv, EΡΤ, and ertflix.
 It supports the domains:
  - www.ertflix.gr
- - webtv.ert.gr
- - archive.ert.gr
+ - www.webtv.ert.gr
+ - www.archive.ert.gr
 
 and will attempt to download any other link provided too.
 
