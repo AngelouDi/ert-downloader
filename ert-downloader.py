@@ -7,8 +7,8 @@ if __name__ == "__main__":
     if "archive.ert" in url:
         stream_data = archive_extractor.obtain_data(url)
     elif "webtv.ert" in url or "ertflix.gr" in url:
-        stream_data = ertflix_extractor.obtain_data(url)
+        stream_data = archive_extractor.obtain_data(url)
     else:
-        stream_data = generic_extractor.obtain_data(url)
+        stream_data = archive_extractor.obtain_data(url)
 
     downloader.download(stream_data)
