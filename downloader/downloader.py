@@ -44,7 +44,7 @@ def download(stream_data):
     pool.map(download_process, download_list)
     pool.close()
     pool.join()  # waiting for the downloads to complete
-    os.system(('ffmpeg -f concat -i download_parts/parts -acodec copy -vcodec copy "{}.mp4"'.format(title)))
+    os.system(('ffmpeg -f concat -i download_parts/parts -acodec copy -vcodec copy "{}//{}.mp4"'.format(os.getcwd(), title)))
     clean_junk()
 
 
