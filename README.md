@@ -1,14 +1,15 @@
 ert-downloader
 ==============
 
-Αυτό το εργαλείο μπορεί να χρησιμοποιηθεί για να κατεβάσει βίντεο απο τον διαδυκτιακό χώρο της EΡΤ και του ertflix.
+Αυτό το εργαλείο μπορεί να χρησιμοποιηθεί για να κατεβάσει βίντεο απο τους μεγαλύτερους ελληνικούς τηλεοπτικούς ιστότοπους
 
 Υποστηρίζει τους ιστότοπους:
- - www.ertflix.gr
- - webtv.ert.gr
- - archive.ert.gr
-
-αλλα θα προσπαθήσει να κατεβάσει και απο οποιονδήποτε άλλο του προσφέρετε.
+ -[x] ertflix.gr
+ -[x] archive.ert.gr
+ -[x] alphatv.gr
+ -[ ] skai.gr
+ -[ ] megatv.com
+ -[ ] star.gr
 
 Χρήση
 =====
@@ -18,7 +19,7 @@ python ert-downloader.py [url]
 Παράδειγμα
 =======
 
-python ert-downloader.py https://webtv.ert.gr/xxxxxxxxxx/
+python ert-downloader.py https://www.ertflix.gr/xxxxxxxxxx/
 
 Απαιτήσεις
 ============
@@ -36,11 +37,15 @@ _______________________________________
 ert-downloader
 ==============
 
-This tool is used to download videos from Greece's public national channel webtv, EΡΤ, and ertflix.
+This tool is used to download videos from Greece's main tv channel websites
+
 It supports the domains:
- - www.ertflix.gr
- - webtv.ert.gr
- - archive.ert.gr
+ -[x] ertflix.gr
+ -[x] archive.ert.gr
+ -[x] alphatv.gr
+ -[ ] skai.gr
+ -[ ] megatv.com
+ -[ ] star.gr
 
 and will attempt to download any other link provided too.
 
@@ -52,15 +57,10 @@ python ert-downloader.py [url]
 Example
 =======
 
-python ert-downloader.py https://webtv.ert.gr/xxxxxxxxxx/
+python ert-downloader.py https://www.ertflix.gr/xxxxxxxxxx/
 
 Dependencies
 ============
 
 This script relies on ffmpeg to encode the video. You can get it for free from the official source at https://ffmpeg.org/download.html
 Put the file ffmpeg.exe at the root folder of the program.
-
-Attention
-==========
-
-This program should not be used under any circumstances to download copyrighted material. We do not condone any sort of piracy using this tool.
