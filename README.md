@@ -4,21 +4,12 @@ ert-downloader
 Αυτό το εργαλείο μπορεί να χρησιμοποιηθεί για να κατεβάσει βίντεο απο τους μεγαλύτερους ελληνικούς τηλεοπτικούς ιστότοπους
 
 Υποστηρίζει τους ιστότοπους:
-<<<<<<< HEAD
  -[x] ertflix.gr
  -[x] archive.ert.gr
  -[x] alphatv.gr
  -[ ] skai.gr
  -[ ] megatv.com
  -[x] star.gr
-=======
- - [x] ertflix.gr
- - [x] archive.ert.gr
- - [x] alphatv.gr
- - [ ] skai.gr
- - [ ] megatv.com
- - [ ] star.gr
->>>>>>> b58e3684eced6cd071e35425c18a3632e9445df6
 
 Χρήση
 =====
@@ -49,21 +40,12 @@ ert-downloader
 This tool is used to download videos from Greece's main tv channel websites
 
 It supports the domains:
-<<<<<<< HEAD
  -[x] ertflix.gr
  -[x] archive.ert.gr
  -[x] alphatv.gr
  -[ ] skai.gr
  -[ ] megatv.com
  -[x] star.gr
-=======
- - [x] ertflix.gr
- - [x] archive.ert.gr
- - [x] alphatv.gr
- - [ ] skai.gr
- - [ ] megatv.com
- - [x] star.gr
->>>>>>> b58e3684eced6cd071e35425c18a3632e9445df6
 
 and will attempt to download any other link provided too.
 
