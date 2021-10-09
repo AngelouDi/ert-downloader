@@ -8,7 +8,7 @@ ert-downloader
  - [x] archive.ert.gr
  - [x] alphatv.gr
  - [ ] skai.gr
- - [ ] megatv.com
+ - [x] megatv.com
  - [x] star.gr
 
 Χρήση
@@ -44,7 +44,7 @@ It supports the domains:
  - [x] archive.ert.gr
  - [x] alphatv.gr
  - [ ] skai.gr
- - [ ] megatv.com
+ - [x] megatv.com
  - [x] star.gr
 
 and will attempt to download any other link provided too.
