@@ -1,4 +1,4 @@
-from extractors import archive_extractor, ertflix_extractor
+from extractors import archive_extractor, ertflix_extractor, star_extractor
 from downloaders import m3u8_downloader, alpha_downloader
 import sys
 
@@ -13,6 +13,9 @@ if __name__ == "__main__":
         extractor = archive_extractor.ArchiveExtractor(url)
         stream_data = extractor.obtain_data()
         m3u8_downloader.Downloader(stream_data).download()
-    elif "alphatv.gr":
+    elif "alphatv.gr" in url:
         alpha_downloader.AlphaDownloader(url).download()
-
+    elif "star.gr" in url:
+        extractor = star_extractor.StarExtractor(url)
+        stream_data = extractor.obtain_data()
+        m3u8_downloader.Downloader(stream_data).download()
