@@ -72,10 +72,14 @@ class ErtflixExtractor:
 
         response = requests.get('https://api.app.ertflix.gr/v1/Player/AcquireContent', params=params)
         data = json.loads(response.text)
-        indexes = data["MediaFiles"][0]["Formats"];
-        for index in indexes:
-            if 'm3u8' in index["Url"]:
+        if not data["Result"]["Success"]:
+            print("Episode not available, please check if episode is available on platform. If it is open an issue on github.")
+            exit(0)
+
+        for index in data["MediaFiles"][0]["Formats"]:
+            if ".m3u8" in index["Url"]:
                 self.index_url = index["Url"]
+                break
 
         return requests.get(self.index_url).text
 
