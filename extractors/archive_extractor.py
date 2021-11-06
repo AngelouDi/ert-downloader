@@ -14,7 +14,7 @@ class ArchiveExtractor:
     def obtain_title(self):
         soup = BeautifulSoup(self.html, "html.parser")
         title = soup.find('title').text
-        title = re.sub(":|/|\||\"", "-", title);
+        title = re.sub(":|\/|\||\"", "-", title);
         print(title)
         return title
 

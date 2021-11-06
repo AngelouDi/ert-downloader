@@ -21,7 +21,7 @@ class ErtflixExtractor:
     def obtain_title(self):
         soup = BeautifulSoup(self.html, "html.parser")
         title = soup.find('title').text
-        title = re.sub(":|/|\||\"", "-", title);
+        title = re.sub(":|\/|\||\"", "-", title)
         print(title)
         return title
 
@@ -61,7 +61,8 @@ class ErtflixExtractor:
 
         selection = int(input("\nΔιαλέξτε Επεισόδιο | Select Episode\n"))
         selected_episode = episode_list[selection]
-        self.title = "{} s{}e{} - {}".format(self.title, selected_episode["seasonNumber"], selected_episode["episodeNumber"], selected_episode["subtitle"])
+        episode_name = re.sub(":|\/|\||\"", "-", selected_episode["subtitle"])
+        self.title = "{} s{}e{} - {}".format(self.title, selected_episode["seasonNumber"], selected_episode["episodeNumber"], episode_name)
         return selected_episode["codename"]
 
     def obtain_index(self):
