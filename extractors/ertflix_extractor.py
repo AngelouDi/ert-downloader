@@ -75,8 +75,15 @@ class ErtflixExtractor:
         if not data["Result"]["Success"]:
             print("Episode not available, please check if episode is available on platform. If it is open an issue on github.")
             exit(0)
-
-        for index in data["MediaFiles"][0]["Formats"]:
+        
+        mediafiles = data["MediaFiles"]
+        mediafile = None
+        
+        for mediafile in mediafiles:
+            if mediafile["RoleName"] == "main":
+                break
+            
+        for index in mediafile["Formats"]:
             if ".m3u8" in index["Url"]:
                 self.index_url = index["Url"]
                 break
