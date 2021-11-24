@@ -18,6 +18,7 @@ class AlphaDownloader:
 
     def obtain_title(self):
         main_title = self.soup.find("div", {"class": "seasonDetails"}).findChild().text
+        main_title = re.sub(":|\/|\||\"", "-", main_title);
         episode = self.soup.find("h2").text
         return main_title + " - " + episode
 

@@ -21,7 +21,7 @@ class ErtflixExtractor:
     def obtain_title(self):
         soup = BeautifulSoup(self.html, "html.parser")
         title = soup.find('title').text
-        title = re.sub(":|/|\||\"", "-", title);
+        title = re.sub(":|\/|\||\"", "-", title)
         print(title)
         return title
 
@@ -61,7 +61,8 @@ class ErtflixExtractor:
 
         selection = int(input("\nΔιαλέξτε Επεισόδιο | Select Episode\n"))
         selected_episode = episode_list[selection]
-        self.title = "{} s{}e{} - {}".format(self.title, selected_episode["seasonNumber"], selected_episode["episodeNumber"], selected_episode["subtitle"])
+        episode_name = re.sub(":|\/|\||\"", "-", selected_episode["subtitle"])
+        self.title = "{} s{}e{} - {}".format(self.title, selected_episode["seasonNumber"], selected_episode["episodeNumber"], episode_name)
         return selected_episode["codename"]
 
     def obtain_index(self):
@@ -75,8 +76,15 @@ class ErtflixExtractor:
         if not data["Result"]["Success"]:
             print("Episode not available, please check if episode is available on platform. If it is open an issue on github.")
             exit(0)
-
-        for index in data["MediaFiles"][0]["Formats"]:
+        
+        mediafiles = data["MediaFiles"]
+        mediafile = None
+        
+        for mediafile in mediafiles:
+            if mediafile["RoleName"] == "main":
+                break
+            
+        for index in mediafile["Formats"]:
             if ".m3u8" in index["Url"]:
                 self.index_url = index["Url"]
                 break

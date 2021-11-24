@@ -12,7 +12,7 @@ class MegatvExtractor:
 
     def obtain_title(self):
         title = re.findall('document.title = "[^"]*', self.html)[0][18:]
-        title = re.sub(":|/|\||\"", "-", title);
+        title = re.sub(":|\/|\||\"", "-", title);
         print(title)
         return title
 

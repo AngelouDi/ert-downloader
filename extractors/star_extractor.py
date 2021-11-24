@@ -16,7 +16,7 @@ class StarExtractor:
 
     def obtain_title(self):
         title = re.findall('data-title=.[^"]*', self.html)[0][12:]
-        title = re.sub(":|/|\||\"", "-", title);
+        title = re.sub(":|\/|\||\"", "-", title);
         print(title)
         return title
 
