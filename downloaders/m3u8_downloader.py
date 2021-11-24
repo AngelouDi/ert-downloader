@@ -5,6 +5,7 @@ import requests
 import re
 import os
 import shutil
+from pathvalidate import sanitize_filename
 
 def download_process(link):
     if not os.path.exists('download_parts'):
@@ -52,7 +53,7 @@ class Downloader():
         pool.map(download_process, self.download_list)
         pool.close()
         pool.join()  # waiting for the downloads to complete
-        os.system(('ffmpeg -f concat -safe 0 -i download_parts/parts -acodec copy -vcodec copy "{}//{}.mp4"'.format(os.getcwd(), self.title)))
+        os.system(('ffmpeg -f concat -safe 0 -i download_parts/parts -acodec copy -vcodec copy "{}//{}.mp4"'.format(os.getcwd(), sanitize_filename(self.title))))
         clean_junk()
 
 
