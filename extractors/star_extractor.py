@@ -25,7 +25,7 @@ class StarExtractor:
         return id
 
     def obtain_data_video(self):
-        data_video = re.findall('data-video=.[^"]*', self.html)[1][12:]
+        data_video = re.findall('data-video=.[^"]*', self.html)[0][12:]
         return data_video
 
     def select_resolution(self):
