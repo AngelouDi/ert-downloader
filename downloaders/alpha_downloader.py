@@ -13,8 +13,8 @@ class AlphaDownloader:
         self.download_url = self.obtain_download_url()
 
     def construct_main_url(self, url):
-        suffix = re.split("/", url)[-1]
-        return "https://www.alphatv.gr/ajax/Isobar.AlphaTv.Components.PopUpVideo.PopUpVideo.PlayMedia/" + suffix
+        suffix = re.split("vid", url)[1]
+        return "https://www.alphatv.gr/ajax/Isobar.AlphaTv.Components.PopUpVideo.PopUpVideo.PlayMedia/?" + suffix
 
     def obtain_title(self):
         main_title = self.soup.find("div", {"class": "seasonDetails"}).findChild().text
