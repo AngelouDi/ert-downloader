@@ -1,7 +1,8 @@
 import requests
 import re
 from bs4 import BeautifulSoup
-import json
+
+from utils.extractor_utils import pad_season_or_episode
 
 
 class ErtflixExtractor:
@@ -62,7 +63,15 @@ class ErtflixExtractor:
         selection = int(input("\nΔιαλέξτε Επεισόδιο | Select Episode\n"))
         selected_episode = episode_list[selection]
         episode_name = re.sub(":|\/|\||\"", "-", selected_episode["subtitle"])
-        self.title = "{} s{}e{} - {}".format(self.title, selected_episode["seasonNumber"], selected_episode["episodeNumber"], episode_name)
+
+        # Pad season and episode number
+        selected_episode['seasonNumber'] = pad_season_or_episode(
+            selected_episode['seasonNumber'])
+        selected_episode['episodeNumber'] = pad_season_or_episode(
+            selected_episode['episodeNumber'])
+
+        self.title = f"{self.title} s{selected_episode['seasonNumber']}e" \
+                     f"{selected_episode['episodeNumber']} - {episode_name}"
         return selected_episode["codename"]
 
     def obtain_index(self):
