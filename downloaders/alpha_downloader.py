@@ -20,7 +20,7 @@ class AlphaDownloader:
         main_title = self.soup.find("div", {"class": "seasonDetails"}).findChild().text
         main_title = re.sub(":|\/|\||\"", "-", main_title);
         episode = self.soup.find("h2").text
-        return main_title + " - " + episode
+        return (main_title + " - " + episode).replace("/","_")
 
     def obtain_download_url(self):
         video_main_container = self.soup.find("div", class_="videoMainContainer")
